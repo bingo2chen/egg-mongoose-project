@@ -10,5 +10,14 @@ module.exports = app => {
   }, {
     timestamps: true,
   })
+  const M = mongoose.model('User', UserSchema)
+  M.find({}, function(err, doc) {
+    if (err) {
+      console.log(err.message)
+    } else {
+      console.log(doc)
+    }
+  })
+
   return mongoose.model('User', UserSchema)
 }

@@ -7,6 +7,7 @@ module.exports = app => {
   const { router, controller } = app
   router.get('/', controller.home.index)
   router.get('/captcha', controller.util.captcha)
+  router.get('/sendcode', controller.util.sendcode)
 
   router.group({ name: 'user', prefix: '/user' }, router => {
     const { info, register, login, verify } = controller.user

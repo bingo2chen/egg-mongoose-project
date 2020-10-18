@@ -33,9 +33,12 @@ module.exports = appInfo => {
     },
     mongoose: {
       client: {
-        url: 'mongodb://127.0.0.1:27017/kkbhub',
+        url: 'mongodb://127.0.0.1:27017/edchub',
         options: {},
       },
+    },
+    jwt: {
+      secret: 'edcwwb@good666666!',
     },
   }
 }
