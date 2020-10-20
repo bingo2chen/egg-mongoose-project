@@ -24,7 +24,7 @@ class UtilHomeController extends BaseController {
     const subject = 'nuxt test captcha'
     const text = ''
     const html = `<h2>Nuxt开放社区</h2><a href="https://zh.nuxtjs.org/"><span>${code}</span></a>`
-    const hasSend = await this.service.sendMail(email, subject, text, html)
+    const hasSend = await this.service.tools.sendMail(email, subject, text, html)
     if (hasSend) {
       this.message('发送成功')
     } else {

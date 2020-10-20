@@ -15,8 +15,11 @@ class UserController extends BaseController {
   async login() {
     // this.success('token test')
     const { ctx, app } = this
-    const { captcha, email, passwd, nickname } = ctx.request.body
+    const { captcha, email, passwd, nickname, emailcode } = ctx.request.body
     if (captcha.toUpperCase() !== ctx.session.captcha.toUpperCase()) {
+      return this.error('邮箱验证码错误')
+    }
+    if (emailcode !== ctx.session.emailcode) {
       return this.error('验证码错误')
     }
     const user = await ctx.model.User.findOne({
@@ -30,7 +33,7 @@ class UserController extends BaseController {
       _id: user._id,
       email,
     }, app.config.jwt.secret, {
-      expiresIn: '2h',
+      expiresIn: '1h',
     })
     this.success({ token, nickname, email })
   }
@@ -44,7 +47,7 @@ class UserController extends BaseController {
     }
 
     const { email, passwd, captcha, nickname } = ctx.request.body
-    console.log({ email, passwd, captcha, nickname })
+    console.log('email, passwd, captcha, nickname', { email, passwd, captcha, nickname })
     if (captcha.toUpperCase() !== ctx.session.captcha.toUpperCase()) {
       return this.error('验证码错误')
     }
@@ -72,7 +75,12 @@ class UserController extends BaseController {
 
   }
   async info() {
-
+    const { ctx } = this
+    // 还不知道是哪个邮件，需要从token中读取
+    // 有的接口需要从token中读数据，有的不需要
+    const { email } = ctx.state
+    const user = await this.checkEmail(email)
+    this.success(user)
   }
 }
 

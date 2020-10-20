@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
   secureConnection: true,
   auth: {
     user: userEmail,
-    pass: '123456',
+    pass: 'eddoczjczefwbcaf',
   },
 })
 
@@ -25,8 +25,10 @@ class ToolService extends Service {
     }
     try {
       await transporter.sendMail(mailOptions)
+      return true
     } catch (err) {
       console.log('email error', err)
+      return false
     }
   }
 }
